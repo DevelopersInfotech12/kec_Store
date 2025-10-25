@@ -11,7 +11,11 @@
     "axios": "^1.12.2",
     "dotenv": "^17.2.3",
     "lucide-react": "^0.545.0",
+    "mongoose": "^8.19.1",
     "next": "15.5.5",
+    "next-intl": "^4.4.0",
+    "nodemailer": "^7.0.9",
+    "razorpay": "^2.9.6",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },

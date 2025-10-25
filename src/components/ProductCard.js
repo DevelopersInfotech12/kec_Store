@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div 
+    <div
       className="group relative bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/20 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden border border-emerald-100/50"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -50,11 +50,11 @@ export default function ProductCard({ product }) {
     >
       {/* Animated gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-teal-500/0 to-green-500/0 group-hover:from-emerald-500/10 group-hover:via-teal-500/10 group-hover:to-green-500/10 transition-all duration-700 pointer-events-none z-10" />
-      
+
       {/* Floating orbs */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000 -translate-y-20 translate-x-20" />
       <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-green-400/20 to-emerald-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000 translate-y-16 -translate-x-16" />
-      
+
       {/* Stock badge with animation */}
       {productStock > 0 && productStock <= 10 && (
         <div className="absolute top-5 right-5 z-20 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl animate-bounce">
@@ -65,11 +65,11 @@ export default function ProductCard({ product }) {
           </span>
         </div>
       )}
-      
+
       {/* Image container with enhanced effects */}
       <div className="relative h-80 bg-gradient-to-br from-emerald-100/50 via-teal-100/30 to-green-100/50 overflow-hidden rounded-t-3xl">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(16,185,129,0.1),rgba(5,150,105,0))]" />
-        
+
         {productImage ? (
           <>
             {!isImageLoaded && (
@@ -80,10 +80,10 @@ export default function ProductCard({ product }) {
                 </div>
               </div>
             )}
-            <img 
-              src={productImage} 
-              alt={productName} 
-              className={`w-full h-full object-cover transform transition-all duration-1000 ${isImageLoaded ? 'opacity-100' : 'opacity-0'} ${isHovered ? 'scale-125 rotate-2' : 'scale-100 rotate-0'}`}
+            <img
+              src={productImage}
+              alt={productName}
+              className={`h-full my-4 mx-auto bg-transparent object-cover transform transition-all duration-1000  ${isImageLoaded ? 'opacity-100' : 'opacity-0'} ${isHovered ? 'scale-125 rotate-2' : 'scale-100 rotate-0'}`}
               onLoad={() => setIsImageLoaded(true)}
               onError={(e) => {
                 e.target.onerror = null;
@@ -104,7 +104,7 @@ export default function ProductCard({ product }) {
             </div>
           </div>
         )}
-        
+
         {/* Floating category badge */}
         <div className="absolute top-5 left-5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2.5 rounded-2xl shadow-2xl backdrop-blur-md transform transition-all duration-500"
           style={{
@@ -159,9 +159,9 @@ export default function ProductCard({ product }) {
             <p className="text-xs font-semibold text-emerald-600 mb-2 uppercase tracking-wider">Price</p>
             <div className="flex items-baseline gap-2">
               <span className="text-5xl font-black bg-gradient-to-r from-emerald-600 via-teal-500 to-green-600 bg-clip-text text-transparent">
-                ${typeof productPrice === 'number' ? productPrice.toFixed(2) : '0.00'}
+                ₹{typeof productPrice === 'number' ? productPrice.toFixed(2) : '0.00'}
               </span>
-              <span className="text-gray-400 line-through text-lg">${(productPrice * 1.3).toFixed(2)}</span>
+              <span className="text-gray-400 line-through text-lg">₹{(productPrice * 1.3).toFixed(2)}</span>
             </div>
           </div>
 
@@ -174,7 +174,7 @@ export default function ProductCard({ product }) {
               <span className="relative z-10 group-hover/btn:text-emerald-600 transition-colors">Details</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-50 to-teal-50 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-left" />
             </Link>
-            
+
             <button
               onClick={handleAddToCart}
               disabled={productStock === 0 || isAdding}

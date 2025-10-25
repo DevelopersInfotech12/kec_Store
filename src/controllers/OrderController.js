@@ -1,6 +1,7 @@
+import connectDB from '@/app/config/database';
 import Order from '@/models/Order';
 import Product from '@/models/Product';
-import connectDB from '@/config/database';
+// import connectDB from '@/config/database';
 import EmailService from '@/services/EmailService';
 
 class OrderController {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 
 export default function ModernFooter() {
   const [email, setEmail] = useState('');
@@ -84,7 +84,7 @@ export default function ModernFooter() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 lg:max-w-6xl mx-auto">
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category} className="space-y-4">
               <h3 className="text-2xl font-bold capitalize bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
@@ -95,7 +95,7 @@ export default function ModernFooter() {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-slate-300 font-bold hover:text-emerald-300 hover:pl-2 transition-all duration-300 inline-block"
+                      className="text-slate-300 font-bold hover:text-emerald-300 hover:pl-2 transition-all duration-300 inline-block text-sm"
                     >
                       {link.name}
                     </a>
@@ -114,7 +114,9 @@ export default function ModernFooter() {
             </div>
             <div>
               <h4 className="font-semibold mb-1 text-emerald-300 text-lg">Email Us</h4>
-              <p className="text-slate-200 text-sm">support@store.com</p>
+              <p className="text-slate-200 text-sm">info@kecbiofuel.com</p>
+              <p className="text-slate-200 text-sm">info@kisanexpreince.com</p>
+              <p className="text-slate-200 text-sm">Franchise@kisanexperience.com</p>
             </div>
           </div>
           <div className="flex items-start gap-4 group">
@@ -123,7 +125,9 @@ export default function ModernFooter() {
             </div>
             <div>
               <h4 className="font-semibold mb-1 text-emerald-300 text-lg">Call Us</h4>
-              <p className="text-slate-200 text-sm">+1 (555) 123-4567</p>
+              <p className="text-slate-200 text-sm">+91-8527626868</p>
+              <p className="text-slate-200 text-sm">+91-9319719115</p>
+              <p className="text-slate-200 text-sm">+91-8287933634</p>
             </div>
           </div>
           <div className="flex items-start gap-4 group">
@@ -132,7 +136,10 @@ export default function ModernFooter() {
             </div>
             <div>
               <h4 className="font-semibold mb-1 text-emerald-300 text-lg">Visit Us</h4>
-              <p className="text-slate-200 text-sm">123 Store Street, NY</p>
+              <p className="text-slate-200 text-sm">429, 4th Floor, Ansal Chamber 2,</p>
+              <p className="text-slate-200 text-sm">Metro Station - Gate No. 3,</p>
+              <p className="text-slate-200 text-sm">Bikaji Cama Place,</p>
+              <p className="text-slate-200 text-sm">New Delhi - 110066</p>
             </div>
           </div>
         </div>
@@ -142,10 +149,9 @@ export default function ModernFooter() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Logo & Copyright */}
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent">
-               <img src="/images/logo.png" alt="" srcset="" />
-              </h3>
-             
+              <div className="mb-2">
+                <img src="/images/logo.png" alt="KEC Logo" className="h-12 mx-auto md:mx-0" />
+              </div>
             </div>
 
             {/* Social Links */}
@@ -186,9 +192,9 @@ export default function ModernFooter() {
           </div>
         </div>
         <div>
-           <p className="text-slate-400 text-sm flex items-center gap-2 justify-center py-4">
-                Developed By Developers Infotech © 2025 All rights reserved
-              </p>
+          <p className="text-slate-400 text-sm flex items-center gap-2 justify-center py-4">
+            Developed By Developers Infotech © 2025 All rights reserved
+          </p>
         </div>
       </div>
 

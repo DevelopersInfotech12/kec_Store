@@ -1,8 +1,9 @@
 import Payment from '@/models/Payment';
-import connectDB from '@/config/database';
+// import connectDB from '@/config/database';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import OrderController from './OrderController';
+import connectDB from '@/app/config/database';
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -18,7 +19,7 @@ class PaymentController {
 
       // Create Razorpay order
       const razorpayOrder = await razorpay.orders.create({
-        amount: Math.round(amount * 100), // Convert to paise
+        amount: Math.round(amount * 100),
         currency: paymentData.currency || 'INR',
         receipt: orderId,
         notes: {
@@ -41,15 +42,16 @@ class PaymentController {
         metadata: paymentData.metadata || {},
       });
 
+      // ✅ EXPLICITLY RETURN ALL REQUIRED FIELDS
       return {
         success: true,
         orderId: razorpayOrder.id,
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
-        razorpayKey: process.env.RAZORPAY_KEY_ID,
+        razorpayKey: process.env.RAZORPAY_KEY_ID, // ✅ Make sure this exists
         customerName: customer.name,
         customerEmail: customer.email,
-        customerPhone: customer.phone,
+        customerPhone: customer.phone || '',
         data: paymentRecord,
       };
     } catch (error) {
@@ -167,8 +169,8 @@ class PaymentController {
       await connectDB();
 
       // Find payment by Razorpay payment ID
-      const payment = await Payment.findOne({ 
-        'gatewayResponse.razorpay_payment_id': paymentId 
+      const payment = await Payment.findOne({
+        'gatewayResponse.razorpay_payment_id': paymentId
       });
 
       if (!payment) {
@@ -256,8 +258,8 @@ class PaymentController {
   }
 
   async handlePaymentCaptured(paymentEntity) {
-    const payment = await Payment.findOne({ 
-      transactionId: paymentEntity.order_id 
+    const payment = await Payment.findOne({
+      transactionId: paymentEntity.order_id
     });
 
     if (payment && payment.status !== 'success') {
@@ -277,8 +279,8 @@ class PaymentController {
   }
 
   async handlePaymentFailed(paymentEntity) {
-    const payment = await Payment.findOne({ 
-      transactionId: paymentEntity.order_id 
+    const payment = await Payment.findOne({
+      transactionId: paymentEntity.order_id
     });
 
     if (payment) {
@@ -292,8 +294,8 @@ class PaymentController {
   }
 
   async handleRefundCreated(refundEntity) {
-    const payment = await Payment.findOne({ 
-      'gatewayResponse.razorpay_payment_id': refundEntity.payment_id 
+    const payment = await Payment.findOne({
+      'gatewayResponse.razorpay_payment_id': refundEntity.payment_id
     });
 
     if (payment) {

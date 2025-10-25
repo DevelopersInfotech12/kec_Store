@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
 
@@ -15,6 +15,18 @@ export default function CheckoutPage() {
     address: '',
   });
   const [errors, setErrors] = useState({});
+
+  // Load Razorpay script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+    
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -32,14 +44,86 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handlePaymentSuccess = async (response) => {
+    try {
+      // Verify payment on backend
+      const verifyResponse = await fetch('/api/payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'verify',
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature,
+        }),
+      });
+
+      const verifyData = await verifyResponse.json();
+
+      if (verifyData.success && verifyData.isValid) {
+        clearCart();
+        router.push(`/success?orderId=${verifyData.orderId}&paymentId=${response.razorpay_payment_id}`);
+      } else {
+        alert('Payment verification failed. Please contact support.');
+      }
+    } catch (error) {
+      console.error('Payment verification error:', error);
+      alert('Payment verification failed. Please contact support.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePaymentError = (error) => {
+    console.error('Payment error:', error);
+    alert(`Payment failed: ${error.description || 'Please try again'}`);
+    setLoading(false);
+  };
+
+  const initializeRazorpay = (orderData) => {
+    const options = {
+      key: orderData.razorpayKey,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: 'Your Store Name',
+      description: 'Product Purchase',
+      order_id: orderData.orderId,
+      prefill: {
+        name: orderData.customerName,
+        email: orderData.customerEmail,
+        contact: orderData.customerPhone,
+      },
+      theme: {
+        color: '#3B82F6', // Your primary color
+      },
+      handler: handlePaymentSuccess,
+      modal: {
+        ondismiss: () => {
+          setLoading(false);
+          alert('Payment cancelled');
+        },
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.on('payment.failed', handlePaymentError);
+    razorpay.open();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!validateForm()) return;
     
+    if (!window.Razorpay) {
+      alert('Payment system is loading. Please try again in a moment.');
+      return;
+    }
+    
     setLoading(true);
 
     try {
+      // Prepare items for order
       const items = cart.map(item => ({
         productId: item._id || item.id,
         name: item.name,
@@ -47,27 +131,43 @@ export default function CheckoutPage() {
         quantity: item.quantity,
       }));
 
-      const response = await fetch('/api/payment/create', {
+      // Calculate total
+      const totalAmount = getTotal();
+      const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+      // Create payment order
+      const response = await fetch('/api/payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items,
-          customer: formData,
+          action: 'create',
+          orderId: orderId,
+          amount: totalAmount,
+          currency: 'INR',
+          customer: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+          },
+          metadata: {
+            items: items,
+            shippingAddress: formData.address,
+          },
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        clearCart();
-        window.location.href = data.paymentUrl;
+        // Initialize Razorpay payment
+        initializeRazorpay(data);
       } else {
-        alert(data.error || 'Payment initiation failed. Please try again.');
+        alert(data.error || 'Failed to initiate payment. Please try again.');
+        setLoading(false);
       }
     } catch (error) {
       console.error('Checkout error:', error);
       alert('An error occurred. Please try again.');
-    } finally {
       setLoading(false);
     }
   };
@@ -145,7 +245,7 @@ export default function CheckoutPage() {
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none ${
                     errors.phone ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="+1 234 567 8900"
+                  placeholder="+91 9876543210"
                 />
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
@@ -205,11 +305,11 @@ export default function CheckoutPage() {
                     <div className="flex-1">
                       <h3 className="font-semibold text-gray-900">{item.name}</h3>
                       <p className="text-sm text-gray-600">
-                        Qty: {item.quantity} × ${item.price.toFixed(2)}
+                        Qty: {item.quantity} × ₹{item.price.toFixed(2)}
                       </p>
                     </div>
                     <p className="font-bold text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ₹{(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 );
@@ -219,7 +319,7 @@ export default function CheckoutPage() {
             <div className="space-y-2 mb-6 pb-6 border-b">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal:</span>
-                <span>${getTotal().toFixed(2)}</span>
+                <span>₹{getTotal().toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping:</span>
@@ -227,20 +327,20 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Tax:</span>
-                <span>Calculated at payment</span>
+                <span>Included</span>
               </div>
             </div>
             
             <div className="flex justify-between items-center text-xl font-bold">
               <span>Total:</span>
-              <span className="text-primary text-2xl">${getTotal().toFixed(2)}</span>
+              <span className="text-primary text-2xl">₹{getTotal().toFixed(2)}</span>
             </div>
             
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <p className="text-sm text-gray-700">
                 <span className="font-semibold">🔒 Secure Checkout</span>
                 <br />
-                Your payment information is encrypted and secure.
+                Your payment information is encrypted and secure with Razorpay.
               </p>
             </div>
           </div>

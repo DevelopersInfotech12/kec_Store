@@ -141,7 +141,7 @@ export default function ProductsPage() {
       <div className="fixed bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
       
       <div className="relative py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Hero Header */}
           <div className="text-center mb-12">
             <div className="inline-block mb-4">
@@ -151,7 +151,7 @@ export default function ProductsPage() {
               Our Premium Collection
             </h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Discover amazing products crafted with care
+              Discover sustainable solutions crafted with care — empowering farmers through organic fertilizers, clean energy, and agritech innovation.
             </p>
           </div>
 

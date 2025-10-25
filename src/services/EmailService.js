@@ -1,5 +1,6 @@
+import { emailConfig } from '@/app/config/zoho.config';
 import nodemailer from 'nodemailer';
-import { emailConfig } from '@/config/zoho.config';
+// import { emailConfig } from '@/config/zoho.config';
 
 class EmailService {
   constructor() {
