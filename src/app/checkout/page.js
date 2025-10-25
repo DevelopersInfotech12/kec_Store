@@ -211,7 +211,7 @@ export default function CheckoutPage() {
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
                     errors.name ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="John Doe"
+                  placeholder="ENTER YOUR FULL NAME HERE"
                 />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
@@ -228,7 +228,7 @@ export default function CheckoutPage() {
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
                     errors.email ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="john@example.com"
+                  placeholder="ENTER YOUR EMAIL ADDRESS HERE"
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
@@ -245,7 +245,7 @@ export default function CheckoutPage() {
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
                     errors.phone ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="+91 9876543210"
+                  placeholder="ENTER YOUR PHONE NUMBER HERE"
                 />
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
@@ -262,7 +262,7 @@ export default function CheckoutPage() {
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
                     errors.address ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="123 Main St, City, State, ZIP"
+                  placeholder="ENTER YOUR SHIPPING ADDRESS HERE"
                 />
                 {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
               </div>
