@@ -208,7 +208,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300 ${
                     errors.name ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="ENTER YOUR FULL NAME HERE"
@@ -225,7 +225,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300  ${
                     errors.email ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="ENTER YOUR EMAIL ADDRESS HERE"
@@ -242,7 +242,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.phone}
                   onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300 ${
                     errors.phone ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="ENTER YOUR PHONE NUMBER HERE"
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                   value={formData.address}
                   onChange={e => setFormData({ ...formData, address: e.target.value })}
                   rows="4"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300 ${
                     errors.address ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="ENTER YOUR SHIPPING ADDRESS HERE"
