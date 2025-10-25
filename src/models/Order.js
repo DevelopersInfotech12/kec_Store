@@ -15,54 +15,39 @@ const OrderItemSchema = new mongoose.Schema({
   },
 });
 
-const OrderSchema = new mongoose.Schema({
-  orderId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  items: [OrderItemSchema],
-  customer: {
-    name: {
+const OrderSchema = new mongoose.Schema(
+  {
+    orderId: {
       type: String,
       required: true,
+      unique: true,
     },
-    email: {
+    items: [OrderItemSchema],
+    customer: {
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      phone: { type: String, required: true },
+      address: { type: String, required: true },
+    },
+    totalAmount: { type: Number, required: true, min: 0 },
+    status: {
       type: String,
-      required: true,
+      enum: ['pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'failed'],
+      default: 'pending',
     },
-    phone: {
+    paymentId: String,
+    paymentStatus: {
       type: String,
-      required: true,
+      enum: ['pending', 'completed', 'failed', 'refunded'],
+      default: 'pending',
     },
-    address: {
-      type: String,
-      required: true,
-    },
+    paymentMethod: String,
+    notes: String,
   },
-  totalAmount: {
-    type: Number,
-    required: true,
-    min: 0,
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'failed'],
-    default: 'pending',
-  },
-  paymentId: String,
-  paymentStatus: {
-    type: String,
-    enum: ['pending', 'completed', 'failed', 'refunded'],
-    default: 'pending',
-  },
-  paymentMethod: String,
-  notes: String,
-}, {
-  timestamps: true,
-});
+  { timestamps: true }
+);
 
-OrderSchema.index({ orderId: 1 });
+// ✅ Keep only meaningful indexes
 OrderSchema.index({ 'customer.email': 1 });
 OrderSchema.index({ status: 1 });
 
