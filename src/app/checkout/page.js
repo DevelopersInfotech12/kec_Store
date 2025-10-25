@@ -94,7 +94,7 @@ export default function CheckoutPage() {
         contact: orderData.customerPhone,
       },
       theme: {
-        color: '#3B82F6', // Your primary color
+        color: '#3B82F6',
       },
       handler: handlePaymentSuccess,
       modal: {
@@ -196,11 +196,11 @@ export default function CheckoutPage() {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Customer Information Form */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-6 text-orange-500">Customer Information</h2>
+          <div className="bg-gradient-to-b from-teal-50 to-teal-100 rounded-lg shadow-md p-6">
+            <h2 className="text-2xl font-bold mb-6 text-teal-700">Customer Information</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">
+                <label className="block text-gray-800 font-semibold mb-2">
                   Full Name *
                 </label>
                 <input
@@ -208,16 +208,16 @@ export default function CheckoutPage() {
                   required
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300 ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black placeholder-gray-400 ${
                     errors.name ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="ENTER YOUR FULL NAME HERE"
+                  placeholder="Enter your full name"
                 />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
               
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">
+                <label className="block text-gray-800 font-semibold mb-2">
                   Email Address *
                 </label>
                 <input
@@ -225,16 +225,16 @@ export default function CheckoutPage() {
                   required
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300  ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black placeholder-gray-400  ${
                     errors.email ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="ENTER YOUR EMAIL ADDRESS HERE"
+                  placeholder="Enter your email address"
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
               
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">
+                <label className="block text-gray-800 font-semibold mb-2">
                   Phone Number *
                 </label>
                 <input
@@ -242,16 +242,16 @@ export default function CheckoutPage() {
                   required
                   value={formData.phone}
                   onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300 ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black placeholder-gray-400 ${
                     errors.phone ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="ENTER YOUR PHONE NUMBER HERE"
+                  placeholder="Enter your phone number"
                 />
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
               
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">
+                <label className="block text-gray-800 font-semibold mb-2">
                   Shipping Address *
                 </label>
                 <textarea
@@ -259,10 +259,10 @@ export default function CheckoutPage() {
                   value={formData.address}
                   onChange={e => setFormData({ ...formData, address: e.target.value })}
                   rows="4"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-black placeholder-gray-300 ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black placeholder-gray-400 ${
                     errors.address ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="ENTER YOUR SHIPPING ADDRESS HERE"
+                  placeholder="Enter your shipping address"
                 />
                 {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
               </div>
@@ -270,7 +270,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-emerald-700 text-white py-3 rounded-lg hover:bg-blue-600 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -288,8 +288,8 @@ export default function CheckoutPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="bg-white rounded-lg shadow-md p-6 h-fit">
-            <h2 className="text-2xl font-bold mb-6 text-orange-500">Order Summary</h2>
+          <div className="bg-gradient-to-b from-teal-50 to-teal-100 rounded-lg shadow-md p-6 h-fit">
+            <h2 className="text-2xl font-bold mb-6 text-teal-700">Order Summary</h2>
             <div className="space-y-4 mb-6">
               {cart.map(item => {
                 const itemId = item._id || item.id;
@@ -331,12 +331,12 @@ export default function CheckoutPage() {
               </div>
             </div>
             
-            <div className="flex justify-between items-center text-xl font-bold text-emerald-700">
+            <div className="flex justify-between items-center text-xl font-bold text-teal-700 mb-6">
               <span>Total:</span>
-              <span className="text-primary text-2xl">₹{getTotal().toFixed(2)}</span>
+              <span className="text-teal-600 text-2xl">₹{getTotal().toFixed(2)}</span>
             </div>
             
-            <div className="mt-6 p-4 bg-emerald-700 rounded-lg">
+            <div className="mt-6 p-4 bg-teal-600 rounded-lg">
               <p className="text-sm text-white">
                 <span className="font-semibold">🔒 Secure Checkout</span>
                 <br />
